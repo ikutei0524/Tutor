@@ -22,14 +22,22 @@ import java.util.Optional;
 
 public class SupplierController {
     private final SupplierRepository supplierRepository;
-    @Autowired
+    @Autowired//注入要記得這行
     public SupplierController(SupplierRepository supplierRepository) {
-        this.supplierRepository = supplierRepository;
+        this.supplierRepository = supplierRepository;//將suppRE注入
     }
+
+    //以下是CRUD
     @GetMapping
     public ResponseEntity<List<GetSupplierResponse>> getAllSuppliers(){
-        List<Supplier>supplier = supplierRepository.findAll();
-        return ResponseEntity.ok(supplier.stream().map(GetSupplierResponse::new).toList());
+        List<Supplier>suppliers = supplierRepository.findAll();
+        return ResponseEntity.ok(suppliers.stream().map(supplier -> {
+                GetSupplierResponse response = new GetSupplierResponse(supplier);
+                response.setProducts(supplier.getProducts().stream().map(ProductResponse::new).toList());
+                return response;
+        }).toList());
+
+
     }
 
     @GetMapping( "/{id}")
@@ -37,6 +45,8 @@ public class SupplierController {
         Optional<Supplier> supplier = supplierRepository.findById(id);
         if(supplier.isPresent()){
             GetSupplierResponse response = new GetSupplierResponse(supplier.get());
+            List<Product>productList = supplier.get().getProducts();
+            response.setProducts(productList.stream().map(ProductResponse::new).toList());
             return ResponseEntity.ok(response);
         }else{
             return ResponseEntity.notFound().build();

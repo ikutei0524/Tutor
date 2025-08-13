@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 對應 auto_increment
-    private int id;
+    private Integer id;
 
     @Column(name = "username")
     private String username;
@@ -15,14 +15,15 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "pwd") // 可選，如果你資料表有 pwd 欄位才加
-    private String pwd;
+    @Column(name = "password") // 可選，如果你資料表有 pwd 欄位才加
+    private String password;
+    //tode 實際應用環境切勿使用明碼儲存
 
     // ✅ 無參數建構子：JPA 必須要有
     public User() {}
 
     // 有參數建構子：選擇性
-    public User(int id, String username, String email) {
+    public User(Integer id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -33,7 +34,7 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -53,12 +54,13 @@ public class User {
         this.email = email;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
+
 

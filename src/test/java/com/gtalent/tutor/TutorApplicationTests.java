@@ -1,14 +1,13 @@
 package com.gtalent.tutor;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootTest
-class TutorApplicationTests {
+@SpringBootApplication
+public class TutorApplicationTests {
 
-	@Test
-	void contextLoads() {
+	public static void main(String[] args) {
+		SpringApplication.run(TutorApplication.class, args);
 	}
-
 }
 

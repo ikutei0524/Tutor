@@ -1,38 +1,35 @@
-package com.gtalent.tutor.models;
+package com.gtalent.tutor.responses;
 
-import jakarta.persistence.*;
+import com.gtalent.tutor.responses.GetSupplierResponse;
+import com.gtalent.tutor.models.Product;
+
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductResponse {
     private int id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "price")
     private BigDecimal price;
-    @Column(name = "quantity")
     private int quantity;
-    @Column(name = "status")
     private boolean status;
-    //@Column(name = "supplier_id")
-    //private int supplierId;
-    @ManyToOne
-    @JoinColumn(name="supplier_id")
-    private Supplier supplier;
+    private GetSupplierResponse supplier;
 
-    //public int getSupplierId() {
-        //return supplierId;
-    //}
 
-    //public void setSupplierId(int supplierId) {
-        //this.supplierId = supplierId;
-    //}
 
-    public Product(int id, String name, BigDecimal price, int quantity, boolean status) {
+
+    public ProductResponse(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.quantity = product.getQuantity();
+        this.status = product.isStatus();
+        //if (product.getSupplier() != null) {
+            //.supplier = new GetSupplierResponse(product.getSupplier());
+        //}
+    }
+
+
+    public ProductResponse(int id, String name, BigDecimal price, int quantity, boolean status) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -40,7 +37,9 @@ public class Product {
         this.status = status;
     }
 
-    public Product() {
+
+
+    public ProductResponse() {
     }
 
     public int getId() {
@@ -83,11 +82,11 @@ public class Product {
         this.status = status;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
+    public GetSupplierResponse getSupplier() {
+        return supplier;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public void setSupplier(GetSupplierResponse supplier) {
+        this.supplier = supplier;
     }
 }

@@ -2,12 +2,15 @@ package com.gtalent.tutor.responses;
 
 import com.gtalent.tutor.models.Supplier;
 
+import java.util.List;
+
 public class GetSupplierResponse {
     private int id;
     private String name;
     private String phone;
     private String address;
     private String email;
+    private List<ProductResponse> products;
 
     public GetSupplierResponse(Supplier supplier) {
         this.id =supplier.getId();
@@ -64,5 +67,19 @@ public class GetSupplierResponse {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<ProductResponse> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductResponse> products) {
+        this.products = products;
+    }
+
+    public GetSupplierResponse(List<ProductResponse> products) {
+        this.products = products;
+    }
+
+
 }
 

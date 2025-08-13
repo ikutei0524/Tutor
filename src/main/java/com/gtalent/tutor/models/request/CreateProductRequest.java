@@ -2,27 +2,37 @@ package com.gtalent.tutor.models.request;
 
 import com.gtalent.tutor.models.Product;
 
+import java.math.BigDecimal;
+
 public class CreateProductRequest {
     private String name;
-
-    private  int price;
+    private BigDecimal price;
     private int quantity;
-    private int status;
-    private Integer supplier_id;
+    private boolean status;
+    private int supplierId;
 
-    public CreateProductRequest(){
-
+    public boolean isStatus() {
+        return status;
     }
 
-    public CreateProductRequest(Product savedProduct) {
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public CreateProductRequest(String name, int price, int quantity, int status, Integer supplier_id) {
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public CreateProductRequest(String name, BigDecimal price, int quantity, boolean status, int supplierId) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.status = status;
-        this.supplier_id = supplier_id;
+        this.supplierId = supplierId;
     }
 
     public String getName() {
@@ -33,11 +43,11 @@ public class CreateProductRequest {
         this.name = name;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -49,19 +59,5 @@ public class CreateProductRequest {
         this.quantity = quantity;
     }
 
-    public int getStatus() {
-        return status;
-    }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Integer getSupplier_id() {
-        return supplier_id;
-    }
-
-    public void setSupplier_id(Integer supplier_id) {
-        this.supplier_id = supplier_id;
-    }
 }

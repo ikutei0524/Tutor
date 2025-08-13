@@ -3,10 +3,10 @@ package com.gtalent.tutor.responses;
 import com.gtalent.tutor.models.User;
 
 public class GetUserResponse {
-    private int id;
+    private Integer id;
     private String username;
 
-    public GetUserResponse(String username, int id) {
+    public GetUserResponse(String username, Integer id) {
         this.id = id;
         this.username = username;
     }
@@ -24,7 +24,7 @@ public class GetUserResponse {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

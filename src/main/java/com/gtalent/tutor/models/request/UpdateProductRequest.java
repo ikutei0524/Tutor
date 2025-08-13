@@ -1,13 +1,19 @@
 package com.gtalent.tutor.models.request;
 
+import com.gtalent.tutor.models.Supplier;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+import java.math.BigDecimal;
+
 public class UpdateProductRequest {
     private String name;
-    private int price;
+    private BigDecimal price;
     private int quantity;
 
 
-
-    public UpdateProductRequest(String name, int price, int quantity) {
+    public UpdateProductRequest(String name, BigDecimal price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -22,12 +28,11 @@ public class UpdateProductRequest {
         this.name = name;
     }
 
-
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -39,4 +44,6 @@ public class UpdateProductRequest {
         this.quantity = quantity;
     }
 
+    public UpdateProductRequest() {
+    }
 }

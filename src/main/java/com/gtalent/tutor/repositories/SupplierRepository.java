@@ -1,6 +1,8 @@
 package com.gtalent.tutor.repositories;
 
+import com.gtalent.tutor.models.Product;
 import com.gtalent.tutor.models.Supplier;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

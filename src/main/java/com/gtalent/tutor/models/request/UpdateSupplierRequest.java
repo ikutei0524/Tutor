@@ -3,7 +3,6 @@ package com.gtalent.tutor.models.request;
 import com.gtalent.tutor.models.Supplier;
 
 public class UpdateSupplierRequest {
-    private int id;
     private String name;
     private String phone;
     private String address;
@@ -11,20 +10,13 @@ public class UpdateSupplierRequest {
 
 
     public UpdateSupplierRequest(int id, String name, String phone, String address, String email) {
-        this.id = id;
         this.name = name;
         this.phone = phone;
         this.address = address;
         this.email = email;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
