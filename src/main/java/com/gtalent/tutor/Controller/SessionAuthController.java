@@ -31,7 +31,7 @@ public class SessionAuthController {
 
     @PostMapping("/login")
     public ResponseEntity<User>login(@RequestBody LoginRequest request, HttpSession session){
-        Optional<User>user = userService.findByUsernameAndPassword(request.getUsername());
+        Optional<User>user = userService.findByUsernameAndPassword(request.getUsername(),request.getPassword());
         if(user.isPresent()){
             session.setAttribute("userId",user.get().getId());
             return ResponseEntity.ok(user.get());
