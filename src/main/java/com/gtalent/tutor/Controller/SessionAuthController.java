@@ -31,7 +31,7 @@ public class SessionAuthController {
 
     @PostMapping("/login")
     public ResponseEntity<User>login(@RequestBody LoginRequest request, HttpSession session){
-        Optional<User>user = userService.findByUsernameAndPassword(request.getUsername(),request.getPassword());
+        Optional<User>user = userService.findByUsernameAndPassword(request.getUsername());
         if(user.isPresent()){
             session.setAttribute("userId",user.get().getId());
             return ResponseEntity.ok(user.get());
@@ -55,18 +55,17 @@ public class SessionAuthController {
     }
 
     @PostMapping("/register")
-
-    public ResponseEntity<RegisterUserResponse> registerAccount(@RequestBody RegisterRequest request) {
+    public ResponseEntity<RegisterUserResponse> registerAccount(@RequestBody RegisterRequest request,HttpSession session) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
-        //避免ID被更改,啟用自動新增ID
-        User newUser =new User();//建立新用戶
-        newUser.setId(null); //自動新增ID
-        newUser.setUsername(request.getUsername());//自訂使用者名稱
-        newUser.setEmail(request.getEmail());//自訂Email
-        newUser.setPassword(request.getPassword()); // 自訂密碼
+        }
 
+        User newUser =new User();
+        //newUser.setId(null);
+        newUser.setUsername(request.getUsername());
+        newUser.setEmail(request.getEmail());
+        newUser.setPassword(request.getPassword());
+        session.setAttribute("userId",newUser.getId());
         User savedUser = userRepository.save(newUser);//儲存新用戶資料
 
 
@@ -74,8 +73,6 @@ public class SessionAuthController {
         RegisterUserResponse response = new RegisterUserResponse(
                 savedUser.getUsername(),
                 savedUser.getEmail()
-                //我想要回傳的東西(只有使用者名稱跟信箱)
-                //日後可新增運用信箱找回密碼
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);//已新增完成
     }

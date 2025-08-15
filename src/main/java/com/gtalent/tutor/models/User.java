@@ -30,7 +30,7 @@ public class User {
     }
 
     // ✅ Getter / Setter（必要）
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
