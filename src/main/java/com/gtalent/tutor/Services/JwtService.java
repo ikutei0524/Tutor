@@ -2,6 +2,8 @@ package com.gtalent.tutor.Services;
 
 
 import com.gtalent.tutor.models.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.function.Function;
 
 
 @Service
@@ -19,20 +22,34 @@ public class JwtService {
 
 
     public String generateToken(User user){
+
        return Jwts.builder()
+               //唯一的使用者名稱
                .setSubject(user.getUsername())
+               //發行時間
                .setIssuedAt(new Date(System.currentTimeMillis()))
-               .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
+               //過期時間
+               .setExpiration(new Date(System.currentTimeMillis()+3600000))
+               //對jwt進行簽名
                .signWith(getKey(), SignatureAlgorithm.HS256)
+               //組合成字串
                .compact();
     }
-
 
 
     private Key getKey() {
         byte[] keyByte = Decoders.BASE64.decode("dGlueXNhbWVoYW5kc29tZXlvdW5nY2FsbHJlY29yZGdpZnRpbnZlbnRlZHdpdGhvdXQ=");
         return Keys.hmacShaKeyFor(keyByte);
     }
+
+    public String getUsernameFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getKey()).build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
 }
 
 

@@ -1,10 +1,10 @@
 package com.gtalent.tutor.Services;
 
-
+import com.gtalent.tutor.Services.JwtService;
 import com.gtalent.tutor.models.User;
+import com.gtalent.tutor.repositories.UserRepository;
 import com.gtalent.tutor.models.request.LoginRequest;
 import com.gtalent.tutor.models.request.RegisterRequest;
-import com.gtalent.tutor.repositories.UserRepository;
 import com.gtalent.tutor.responses.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,22 +19,28 @@ public class AuthService {
     private JwtService jwtService;
 
     public AuthResponse register(RegisterRequest request) {
+        // 1. 建立user
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
+        user.setRole("ROLE_USER");
         userRepository.save(user);
+        // 2. 產出token
         String jwtToken = jwtService.generateToken(user);
         return new AuthResponse(jwtToken);
     }
 
     public AuthResponse auth(LoginRequest request) {
-        Optional<User>userOptional = userRepository.findByUsername(request.getUsername());
-        if(userOptional.isPresent()){
+        // 1. 找到對應的user
+        Optional<User> userOptional = userRepository.findByUsername(request.getUsername());
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if(request.getPassword().equals(user.getPassword()));
-            String jwtToken = jwtService.generateToken(user);
-            return new AuthResponse(jwtToken);
+            if (request.getPassword().equals(user.getPassword())) {
+                // 2. 產出token
+                String jwtToken = jwtService.generateToken(user);
+                return new AuthResponse(jwtToken);
+            }
         }
         throw new RuntimeException("無效的憑證");
     }

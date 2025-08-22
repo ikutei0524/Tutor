@@ -3,38 +3,40 @@ package com.gtalent.tutor.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 對應 auto_increment
-    private Integer id;
-
-    @Column(name = "username")
+    //auto_increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name="username")
     private String username;
-
-    @Column(name = "email")
+    @Column(name="email")
     private String email;
-
-    @Column(name = "password") // 可選，如果你資料表有 pwd 欄位才加
+    @Column(name="password")
+    //todo 實際應用環境切勿使用明碼儲存
     private String password;
-    //tode 實際應用環境切勿使用明碼儲存
 
-    // ✅ 無參數建構子：JPA 必須要有
-    public User() {}
+    @Column(name="role")
+    private String role;
 
-    // 有參數建構子：選擇性
-    public User(Integer id, String username, String email) {
+    public User(int id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
     }
 
-    // ✅ Getter / Setter（必要）
-    public Integer getId() {
+
+    // default(empty) constructor for jdbc
+    public User() {
+
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,6 +56,7 @@ public class User {
         this.email = email;
     }
 
+
     public String getPassword() {
         return password;
     }
@@ -61,6 +64,24 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
+
 
 
