@@ -3,37 +3,50 @@ package com.gtalent.tutor.responses;
 import com.gtalent.tutor.models.User;
 
 public class GetUserResponse {
-    private Integer id;
+    private int id;
     private String username;
+    private String role;
 
-    public GetUserResponse(String username, Integer id) {
+
+    public GetUserResponse(){
+    }
+
+    public GetUserResponse(String username, int id) {
         this.id = id;
         this.username = username;
     }
 
-    public GetUserResponse() {
+    public GetUserResponse(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.role = user.getRole();
     }
+
+
 
     public String getUsername() {
         return username;
     }
 
-
-
     public int getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setUsername(String username)
     {
         this.username = username;
     }
-    public GetUserResponse(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
+

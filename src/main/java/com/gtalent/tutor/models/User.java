@@ -11,8 +11,10 @@ public class User {
     private int id;
     @Column(name="username")
     private String username;
+
     @Column(name="email")
     private String email;
+
     @Column(name="password")
     //todo 實際應用環境切勿使用明碼儲存
     private String password;

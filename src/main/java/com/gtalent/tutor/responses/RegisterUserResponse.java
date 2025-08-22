@@ -5,6 +5,7 @@ public class RegisterUserResponse {
     private String email;
     private String password;
 
+
     public RegisterUserResponse(){
 
     }
@@ -41,4 +42,6 @@ public class RegisterUserResponse {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

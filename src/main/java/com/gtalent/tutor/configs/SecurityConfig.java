@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -29,6 +31,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/v2/users/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/v2/users/**").hasRole("ADMIN")
+                //Spring Security將會自動加上ROLE->ROLE_ADMIN(前綴)
+                        .requestMatchers("/suppliers/**").hasRole("SUPPLIER")
+                        .requestMatchers(HttpMethod.GET,"/suppliers/**").permitAll()
                         .anyRequest().authenticated()
 
                 //method2
@@ -49,5 +54,9 @@ public class SecurityConfig {
 //restful 核心
 
         return httpSecurity.build();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return  new BCryptPasswordEncoder();
     }
 }

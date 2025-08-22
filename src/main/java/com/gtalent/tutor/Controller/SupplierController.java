@@ -8,8 +8,10 @@ import com.gtalent.tutor.models.request.UpdateSupplierRequest;
 import com.gtalent.tutor.repositories.ProductRepository;
 import com.gtalent.tutor.repositories.SupplierRepository;
 import com.gtalent.tutor.responses.*;
+import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/suppliers")
 @CrossOrigin("*")
+
 
 public class SupplierController {
     private final SupplierRepository supplierRepository;
@@ -54,6 +57,7 @@ public class SupplierController {
     }
         
     @PutMapping("/{id}")
+    //@PreAuthorize("hasRole('SUPPLIER')")  ->"直接在這裡阻擋非指定使用者"
     ResponseEntity<UpdateSupplierResponse>updateSupplierById(@PathVariable int id, @RequestBody UpdateSupplierRequest request){
         Optional<Supplier> supplier = supplierRepository.findById(id);
         if(supplier.isPresent()){
